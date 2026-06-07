@@ -1,4 +1,6 @@
+pub mod auth;
 pub mod events;
+pub mod reservations;
 
 use crate::models::SessionUser;
 use axum_extra::extract::CookieJar;
@@ -46,4 +48,13 @@ pub fn render_guest_nav() -> String {
   </div>
 </nav>"#
         .to_string()
+}
+
+use axum::{
+    http::StatusCode,
+    response::{IntoResponse, Redirect, Response},
+};
+
+pub fn require_user(jar: &CookieJar) -> Result<crate::models::SessionUser, Response> {
+    get_session_user(jar).ok_or_else(|| Redirect::to("/auth/login").into_response())
 }

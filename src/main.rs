@@ -2,7 +2,10 @@ mod db;
 mod handlers;
 mod models;
 
-use axum::{routing::get, Router};
+use axum::{
+    routing::{get, post},
+    Router,
+};
 use sqlx::postgres::PgPoolOptions;
 use std::net::SocketAddr;
 use tower_http::services::ServeDir;
@@ -30,6 +33,24 @@ async fn main() -> anyhow::Result<()> {
         .route("/", get(handlers::events::list_events))
         .route("/events/:id", get(handlers::events::event_detail))
         .route("/partials/events", get(handlers::events::events_partial))
+        .route(
+            "/auth/login",
+            get(handlers::auth::login_page).post(handlers::auth::login),
+        )
+        .route(
+            "/auth/register",
+            get(handlers::auth::register_page).post(handlers::auth::register),
+        )
+        .route("/auth/logout", post(handlers::auth::logout))
+        .route(
+            "/reservations",
+            get(handlers::reservations::my_reservations)
+                .post(handlers::reservations::create_reservation),
+        )
+        .route(
+            "/reservations/:id/cancel",
+            post(handlers::reservations::cancel_reservation),
+        )
         .nest_service("/static", ServeDir::new("static"))
         .with_state(state);
 
