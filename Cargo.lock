@@ -898,24 +898,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "klub-rezerwacje"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "axum-extra",
- "bcrypt",
- "chrono",
- "dotenvy",
- "serde",
- "sqlx",
- "tokio",
- "tower-http",
- "tracing-subscriber",
- "uuid",
-]
-
-[[package]]
 name = "lazy_static"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1145,6 +1127,25 @@ dependencies = [
  "redox_syscall 0.5.18",
  "smallvec",
  "windows-link",
+]
+
+[[package]]
+name = "party-booking"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "axum",
+ "axum-extra",
+ "bcrypt",
+ "chrono",
+ "dotenvy",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "tokio",
+ "tower-http",
+ "tracing-subscriber",
+ "uuid",
 ]
 
 [[package]]

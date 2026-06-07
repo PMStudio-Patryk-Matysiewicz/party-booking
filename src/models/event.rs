@@ -2,8 +2,6 @@ use chrono::{DateTime, Utc};
 use serde::Serialize;
 use uuid::Uuid;
 
-// FromRow - wypełnianie struktury danymi z bazy
-// Serialize - konwersja do JSON-a (odpowiedź API)
 #[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct Event {
     pub id: Uuid,
