@@ -14,8 +14,8 @@ sqlx = { version = "0.8", features = [
     "migrate",
 ] }
 
-uuid = { version = "1", features = ["v4"] }
-chrono = "0.4"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
 serde = { version = "1", features = ["derive"] }
 tower-http = { version = "0.5", features = ["fs"] }
 dotenvy = "0.15"
