@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}KlubEvents{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="nav-brand">◆ KlubEvents</a>
+
+    <div class="nav-links">
+      <a href="/">Wydarzenia</a>
+      {% if let Some(user) = current_user %}
+        <a href="/reservations">Moje rezerwacje</a>
+        {% if user.is_admin() %}
+          <a href="/admin">Panel admina</a>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="nav-user">
+      {% if let Some(user) = current_user %}
+        <span>👤 {{ user.username }}</span>
+        <form method="POST" action="/auth/logout">
+          <button type="submit" class="btn btn-ghost btn-sm">Wyloguj</button>
+        </form>
+      {% else %}
+        <a href="/auth/login"  class="btn btn-ghost btn-sm">Zaloguj się</a>
+        <a href="/auth/register" class="btn btn-primary btn-sm">Rejestracja</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="/static/js/htmx.min.js"></script>
+
+</body>
+</html>

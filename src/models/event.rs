@@ -2,6 +2,7 @@ use chrono::{DateTime, Utc};
 use serde::Serialize;
 use uuid::Uuid;
 
+#[allow(dead_code)]
 #[derive(Debug, Serialize, sqlx::FromRow)]
 pub struct Event {
     pub id: Uuid,

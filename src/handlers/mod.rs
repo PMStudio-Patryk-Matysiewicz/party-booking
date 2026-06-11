@@ -10,6 +10,7 @@ pub fn get_session_user(jar: &CookieJar) -> Option<SessionUser> {
     serde_json::from_str(cookie.value()).ok()
 }
 
+#[allow(dead_code)]
 pub fn render_nav(user: &SessionUser) -> String {
     let admin_link = if user.is_admin() {
         r#"<a href="/admin">Panel admina</a>"#
@@ -36,6 +37,7 @@ pub fn render_nav(user: &SessionUser) -> String {
     )
 }
 
+#[allow(dead_code)]
 pub fn render_guest_nav() -> String {
     r#"<nav class="navbar">
   <a href="/" class="nav-brand">◆ KlubEvents</a>
@@ -50,10 +52,7 @@ pub fn render_guest_nav() -> String {
         .to_string()
 }
 
-use axum::{
-    http::StatusCode,
-    response::{IntoResponse, Redirect, Response},
-};
+use axum::response::{IntoResponse, Redirect, Response};
 
 pub fn require_user(jar: &CookieJar) -> Result<crate::models::SessionUser, Response> {
     get_session_user(jar).ok_or_else(|| Redirect::to("/auth/login").into_response())

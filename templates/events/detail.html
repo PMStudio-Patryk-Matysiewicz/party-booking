@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }} - KlubEvents{% endblock %}
+
+{% block content %}
+<a href="/" class="back-link">← Wróć do listy</a>
+
+<article class="event-detail">
+    <h1>{{ event.title }}</h1>
+
+    <div class="event-meta">
+        <span>📅 {{ event.date.format("%d.%m.%Y · %H:%M") }}</span>
+        <span>📍 {{ event.location_name }} · {{ event.location_address }}</span>
+    </div>
+
+    <p class="event-description">{{ event.description }}</p>
+
+    <div class="event-action">
+        {% if let Some(user) = current_user %}
+        {% if has_reservation %}
+        <div class="reservation-badge">
+            ✓ Masz rezerwację na to wydarzenie
+        </div>
+        {% else %}
+        <form method="POST" action="/reservations">
+            <input type="hidden" name="event_id" value="{{ event.id }}">
+            <button type="submit" class="btn btn-primary">
+                Zarezerwuj miejsce
+            </button>
+        </form>
+        {% endif %}
+        {% else %}
+        <a href="/auth/login" class="btn btn-primary">
+            Zaloguj się, aby zarezerwować
+        </a>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

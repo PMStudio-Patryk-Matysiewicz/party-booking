@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}KlubEvents - Wydarzenia{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+    <h1>Nadchodzące wydarzenia</h1>
+    <p>Znajdź coś dla siebie i zarezerwuj miejsce</p>
+</div>
+
+<div class="filters-bar" hx-get="/partials/events" hx-trigger="change from:select" hx-target="#events-grid"
+    hx-include="[name='location'],[name='category']" hx-indicator="#spinner">
+
+    <select name="location" class="filter-select">
+        <option value="">Wszystkie lokalizacje</option>
+        {% for loc in locations %}
+        <option value="{{ loc }}" {% if selected_location==Some(loc.clone()) %}selected{% endif %}>
+            {{ loc }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="category" class="filter-select">
+        <option value="">Wszystkie kategorie</option>
+        {% for cat in categories %}
+        <option value="{{ cat }}" {% if selected_category==Some(cat.clone()) %}selected{% endif %}>
+            {{ cat }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <span id="spinner" class="htmx-indicator">⟳</span>
+</div>
+
+<div id="events-grid" class="events-grid">
+    {% include "events/_cards.html" %}
+</div>
+{% endblock %}

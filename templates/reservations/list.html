@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Moje rezerwacje - KlubEvents{% endblock %}
+
+{% block content %}
+<h1 class="page-title">Moje rezerwacje</h1>
+
+{% if reservations.is_empty() %}
+<div class="empty-state">
+    <p>Nie masz jeszcze żadnych rezerwacji.</p>
+    <a href="/" class="btn btn-primary" style="margin-top:1rem">
+        Przeglądaj wydarzenia
+    </a>
+</div>
+{% else %}
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Wydarzenie</th>
+                <th>Data</th>
+                <th>Lokalizacja</th>
+                <th>Akcja</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+            <tr>
+                <td>
+                    <a href="/events/{{ r.event_id }}">{{ r.event_title }}</a>
+                </td>
+                <td>{{ r.event_date.format("%d.%m.%Y · %H:%M") }}</td>
+                <td>{{ r.location_name }}</td>
+                <td>
+                    <form method="POST" action="/reservations/{{ r.id }}/cancel">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Anulować rezerwację?')">
+                            Anuluj
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}
